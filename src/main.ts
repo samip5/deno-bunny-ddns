@@ -1,17 +1,26 @@
 import * as BunnySDK from "https://esm.sh/@bunny.net/edgescript-sdk@0.12.0";
+import { BunnyDnsClient } from "./bunny-dns.ts";
+import { loadConfigFromEnv } from "./ddns.ts";
+import { handleRequest } from "./server.ts";
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-console.log("Starting server...");
-const listener = BunnySDK.net.tcp.unstable_new();
-
-console.log("Listening on: ", BunnySDK.net.tcp.toString(listener));
-BunnySDK.net.http.serve(
-  async (req) => {
-    console.log(`[INFO]: ${req.method} - ${req.url}`);
-    await sleep(1);
-    return new Response("Hello mom!");
-  },
-);
+console.log("Starting DDNS update service...");
+BunnySDK.net.http.serve(async (req) => {
+  console.log(`[INFO]: ${req.method} - ${req.url}`);
+  try {
+    const config = loadConfigFromEnv(Deno.env);
+    if (!config) {
+      console.error(
+        "DDNS service is missing required configuration (BUNNY_API_KEY, BUNNY_DNS_ZONE_ID, DDNS_USERNAME, DDNS_PASSWORD)",
+      );
+      return new Response("911\n", { status: 500 });
+    }
+    return await handleRequest(
+      req,
+      config,
+      new BunnyDnsClient(config.bunnyApiKey),
+    );
+  } catch (err) {
+    console.error("Unhandled error while handling request", err);
+    return new Response("911\n", { status: 500 });
+  }
+});

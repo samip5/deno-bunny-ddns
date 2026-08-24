@@ -1,5 +1,5 @@
 ---
-"es-empty-script": patch
+"deno-bunny-ddns": patch
 ---
 
 Upgrade Bunny SDK Version

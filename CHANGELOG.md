@@ -1,4 +1,4 @@
-# es-empty-script
+# deno-bunny-ddns
 
 ## 0.7.3
 
