@@ -1,6 +1,6 @@
 {
   "name": "deno-bunny-ddns",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "MikroTik-compatible DDNS updater that keeps a Bunny DNS record in sync with your router's public IPv4/IPv6 address, running on Bunny Edge Scripting.",
   "main": "src/main.ts",
   "type": "module",

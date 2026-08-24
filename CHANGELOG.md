@@ -1,5 +1,15 @@
 # deno-bunny-ddns
 
+## 0.1.0
+
+### Minor Changes
+
+- 647bb84: Add a MikroTik-compatible `/update` DDNS endpoint that creates or updates a Bunny DNS A/AAAA record for the caller's public IPv4/IPv6 address, with a matching RouterOS scheduler script under `mikrotik/`.
+
+### Patch Changes
+
+- e00c83e: Upgrade Bunny SDK Version
+
 ## 0.7.3
 
 ### Patch Changes
